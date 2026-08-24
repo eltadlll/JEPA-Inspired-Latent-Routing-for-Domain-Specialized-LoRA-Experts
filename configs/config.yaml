@@ -1,0 +1,161 @@
+# =============================================================================
+# Dataset Pipeline Configuration
+#
+# This file drives every stage of the pipeline. Environment variables can be
+# interpolated using dollar-brace syntax, with an optional default value
+# (see README.md "Configuration" section for the exact syntax and examples).
+# =============================================================================
+
+project_name: "ai-agent-datascience-llm-dataset"
+
+directories:
+  root: "data"
+  raw: "data/raw"
+  intermediate: "data/intermediate"
+  clean: "data/clean"
+  processed: "data/processed"
+  instruction: "data/instruction"
+  reports: "data/reports"
+  logs: "data/logs"
+
+# -----------------------------------------------------------------------------
+# Stage 2: Data sources
+# -----------------------------------------------------------------------------
+sources:
+  github_repos:
+    - url: "https://github.com/langchain-ai/langgraph"
+      category: "agent_engineering"
+      framework: "langgraph"
+      include_paths: ["README.md", "docs", "examples"]
+      include_source: false
+    - url: "https://github.com/langchain-ai/langchain"
+      category: "agent_engineering"
+      framework: "langchain"
+      include_paths: ["README.md", "docs"]
+      include_source: false
+    - url: "https://github.com/openai/openai-agents-python"
+      category: "agent_engineering"
+      framework: "openai_agents_sdk"
+      include_paths: ["README.md", "docs", "examples"]
+      include_source: false
+    - url: "https://github.com/modelcontextprotocol/servers"
+      category: "agent_engineering"
+      framework: "mcp"
+      include_paths: ["README.md", "src"]
+      include_source: false
+    - url: "https://github.com/facebookresearch/faiss"
+      category: "retrieval_systems"
+      framework: "faiss"
+      include_paths: ["README.md", "docs", "tutorial"]
+      include_source: false
+    - url: "https://github.com/chroma-core/chroma"
+      category: "retrieval_systems"
+      framework: "chromadb"
+      include_paths: ["README.md", "docs", "examples"]
+      include_source: false
+    - url: "https://github.com/qdrant/qdrant"
+      category: "retrieval_systems"
+      framework: "qdrant"
+      include_paths: ["README.md", "docs"]
+      include_source: false
+    - url: "https://github.com/huggingface/peft"
+      category: "llm_engineering"
+      framework: "peft"
+      include_paths: ["README.md", "docs", "examples"]
+      include_source: false
+    - url: "https://github.com/tiangolo/fastapi"
+      category: "ai_system_design"
+      framework: "fastapi"
+      include_paths: ["README.md", "docs"]
+      include_source: false
+    - url: "https://github.com/pydantic/pydantic"
+      category: "ai_system_design"
+      framework: "pydantic"
+      include_paths: ["README.md", "docs"]
+      include_source: false
+
+  documentation:
+    - name: "mcp-docs"
+      base_url: "https://modelcontextprotocol.io"
+      category: "agent_engineering"
+      framework: "mcp"
+      format: "html"
+      urls:
+        - "https://modelcontextprotocol.io/introduction"
+
+  huggingface_datasets:
+    - repo_id: "iamtarun/python_code_instructions_18k_alpaca"
+      split: "train"
+      category: "data_science"
+      streaming: true
+      max_examples: 500
+      text_field: "text"
+
+  blogs: []
+
+  papers:
+    - identifier: "2305.18290"  # DPO paper, example
+      category: "llm_engineering"
+    - identifier: "2005.11401"  # RAG paper, example
+      category: "retrieval_systems"
+
+# -----------------------------------------------------------------------------
+# Stage 6: Chunking
+# -----------------------------------------------------------------------------
+chunking:
+  strategy: "semantic"
+  chunk_size_tokens: 800
+  chunk_overlap_tokens: 120
+  min_chunk_tokens: 40
+  max_chunk_tokens: 2000
+  respect_code_blocks: true
+
+# -----------------------------------------------------------------------------
+# Stage 7 & 8: Quality thresholds
+# -----------------------------------------------------------------------------
+quality:
+  min_quality_score: 0.55
+  min_token_count: 30
+  max_duplicate_similarity: 0.92
+  min_readability_score: 0.15
+
+retry:
+  max_attempts: 4
+  initial_backoff_seconds: 1.0
+  max_backoff_seconds: 30.0
+  backoff_multiplier: 2.0
+
+concurrency:
+  max_workers: 6
+  github_clone_workers: 2
+  http_request_workers: 8
+
+logging:
+  level: "INFO"
+  log_to_file: true
+  log_file_name: "pipeline.log"
+  rotation: "10 MB"
+  retention: "10 days"
+  serialize_json: false
+
+tokenizer:
+  encoding_name: "cl100k_base"
+  max_document_tokens: 50000
+
+instruction_generation:
+  templates:
+    - "qa"
+    - "instruction_following"
+    - "code_generation"
+    - "architecture_explanation"
+    - "debugging"
+    - "reasoning"
+    - "comparison"
+  max_examples_per_document: 3
+  difficulty_levels: ["beginner", "intermediate", "advanced"]
+
+export:
+  formats: ["jsonl", "parquet"]
+  dataset_name: "ai-agent-datascience-instruct"
+  train_split: 0.9
+  shuffle_seed: 42
