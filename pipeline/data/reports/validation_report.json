@@ -1,0 +1,30 @@
+{
+  "total_examples": 5455,
+  "valid_examples": 5451,
+  "invalid_examples": 4,
+  "issues_by_type": {
+    "duplicate_id": 4
+  },
+  "issues": [
+    {
+      "example_id": "e9ed89cdf5dcaf59",
+      "issue_type": "duplicate_id",
+      "detail": "duplicate example id"
+    },
+    {
+      "example_id": "9535ac80cb70d948",
+      "issue_type": "duplicate_id",
+      "detail": "duplicate example id"
+    },
+    {
+      "example_id": "0646af9faefaa6b0",
+      "issue_type": "duplicate_id",
+      "detail": "duplicate example id"
+    },
+    {
+      "example_id": "19194b7e0eea3fe9",
+      "issue_type": "duplicate_id",
+      "detail": "duplicate example id"
+    }
+  ]
+}

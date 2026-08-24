@@ -1,0 +1,45 @@
+2026-08-06 11:29:52.134 | INFO     | src.pipeline:run_collection:55 - === Stage 2: Raw Data Collection ===
+2026-08-06 11:29:55.238 | INFO     | src.collectors.github_collector:_collect_repo:72 - Cloning https://github.com/langchain-ai/langgraph -> data\raw\github\_repos\langgraph
+2026-08-06 11:30:05.003 | INFO     | src.collectors.github_collector:_collect_repo:72 - Cloning https://github.com/langchain-ai/langchain -> data\raw\github\_repos\langchain
+2026-08-06 11:30:28.602 | INFO     | src.collectors.github_collector:_collect_repo:72 - Cloning https://github.com/openai/openai-agents-python -> data\raw\github\_repos\openai-agents-python
+2026-08-06 11:30:58.457 | INFO     | src.collectors.github_collector:_collect_repo:72 - Cloning https://github.com/modelcontextprotocol/servers -> data\raw\github\_repos\servers
+2026-08-06 11:31:01.973 | INFO     | src.collectors.github_collector:_collect_repo:72 - Cloning https://github.com/facebookresearch/faiss -> data\raw\github\_repos\faiss
+2026-08-06 11:31:08.017 | INFO     | src.collectors.github_collector:_collect_repo:72 - Cloning https://github.com/chroma-core/chroma -> data\raw\github\_repos\chroma
+2026-08-06 11:31:51.931 | INFO     | src.collectors.github_collector:_collect_repo:72 - Cloning https://github.com/qdrant/qdrant -> data\raw\github\_repos\qdrant
+2026-08-06 11:32:20.925 | INFO     | src.collectors.github_collector:_collect_repo:72 - Cloning https://github.com/huggingface/peft -> data\raw\github\_repos\peft
+2026-08-06 11:32:44.560 | INFO     | src.collectors.github_collector:_collect_repo:72 - Cloning https://github.com/tiangolo/fastapi -> data\raw\github\_repos\fastapi
+2026-08-06 11:34:22.374 | INFO     | src.collectors.github_collector:_collect_repo:72 - Cloning https://github.com/pydantic/pydantic -> data\raw\github\_repos\pydantic
+2026-08-06 11:34:32.574 | INFO     | src.collectors.base:_log_summary:107 - [github] collected 2612 document(s).
+2026-08-06 11:34:35.994 | INFO     | src.collectors.base:_log_summary:107 - [documentation] collected 1 document(s).
+2026-08-06 11:35:16.645 | INFO     | src.collectors.huggingface_collector:_collect_dataset:53 - Loading HF dataset 'iamtarun/python_code_instructions_18k_alpaca' split='train' streaming=True
+2026-08-06 11:36:01.350 | INFO     | src.collectors.base:_log_summary:107 - [huggingface] collected 500 document(s).
+2026-08-06 11:36:18.110 | INFO     | src.collectors.base:_log_summary:107 - [paper] collected 2 document(s).
+2026-08-06 11:36:18.112 | INFO     | src.pipeline:run_collection:88 - Stage 2 complete: 3115 raw document(s) collected.
+2026-08-06 11:36:19.296 | INFO     | src.pipeline:run_metadata_enrichment:96 - === Stage 3: Metadata Generation ===
+2026-08-06 11:36:44.093 | INFO     | src.processors.metadata:enrich_batch:35 - Enriched metadata for 3115 documents.
+2026-08-06 11:36:44.095 | INFO     | src.pipeline:run_cleaning:104 - === Stage 4: Cleaning Pipeline ===
+2026-08-06 11:36:50.799 | INFO     | src.cleaners.cleaner:clean_batch:83 - Cleaned 3115 document(s).
+2026-08-06 11:37:00.483 | INFO     | src.processors.metadata:enrich_batch:35 - Enriched metadata for 3115 documents.
+2026-08-06 11:37:00.486 | INFO     | src.cleaners.deduplicator:_remove_exact_duplicates:51 - Removed 6 exact duplicate document(s).
+2026-08-06 11:37:48.921 | INFO     | src.cleaners.deduplicator:_remove_near_duplicates:83 - Removed 8 near-duplicate document(s).
+2026-08-06 11:37:49.442 | INFO     | src.pipeline:run_code_extraction:122 - === Stage 5: Code Extraction ===
+2026-08-06 11:37:50.225 | INFO     | src.processors.code_extractor:extract_batch:67 - Extracted 7865 code block(s) across 3101 document(s).
+2026-08-06 11:37:50.226 | INFO     | src.pipeline:run_chunking:130 - === Stage 6: Document Chunking ===
+2026-08-06 11:38:35.530 | INFO     | src.chunkers.semantic_chunker:chunk_batch:69 - Produced 7614 chunk(s) from 3101 document(s).
+2026-08-06 11:38:36.754 | INFO     | src.pipeline:run_quality_scoring:140 - === Stage 7: Quality Scoring ===
+2026-08-06 11:38:45.997 | INFO     | src.scorers.quality_scorer:score_batch:67 - Scored 3101 document(s); average quality = 0.636
+2026-08-06 11:38:46.000 | INFO     | src.pipeline:run_filtering:148 - === Stage 8: Filtering ===
+2026-08-06 11:38:46.017 | INFO     | src.filters.quality_filter:filter_documents:90 - Filtering complete: kept 1903/3101 (1198 removed).
+2026-08-06 11:38:46.090 | INFO     | src.filters.quality_filter:save_report:113 - Filter report written to data\reports\filter_report.json
+2026-08-06 11:38:47.024 | INFO     | src.pipeline:run_instruction_generation:161 - === Stage 9: Instruction Dataset Generation ===
+2026-08-06 11:38:47.977 | INFO     | src.generators.instruction_generator:generate:58 - Generated 5455 instruction example(s) from 6145 chunk(s) across 1903 document(s).
+2026-08-06 11:38:48.592 | INFO     | src.pipeline:run_validation:187 - === Stage 11: Validation ===
+2026-08-06 11:38:49.073 | INFO     | src.validators.dataset_validator:validate:92 - Validation complete: 5451/5455 example(s) valid (4 issue(s) found).
+2026-08-06 11:38:49.077 | INFO     | src.pipeline:run_export:199 - === Stage 12: Export ===
+2026-08-06 11:38:49.087 | INFO     | src.exporters.exporter:export:30 - Splitting dataset: 4905 train / 546 validation (train_split=0.9)
+2026-08-06 11:38:49.639 | INFO     | src.exporters.exporter:_export_jsonl:64 - Wrote JSONL: data\instruction\ai-agent-datascience-instruct.train.jsonl, data\instruction\ai-agent-datascience-instruct.validation.jsonl
+2026-08-06 11:38:50.050 | INFO     | src.exporters.exporter:_export_parquet:80 - Wrote Parquet: data\instruction\ai-agent-datascience-instruct.train.parquet, data\instruction\ai-agent-datascience-instruct.validation.parquet
+2026-08-06 11:38:50.052 | INFO     | src.pipeline:run_statistics:179 - === Stage 10: Dataset Statistics ===
+2026-08-06 11:38:50.298 | INFO     | src.stats.report_generator:generate:79 - Dataset statistics written to data\reports\dataset_statistics.json
+2026-08-06 11:38:57.203 | INFO     | src.pipeline:run_full_pipeline:218 - === Pipeline complete ===
+2026-08-06 11:38:57.204 | INFO     | src.pipeline:run_full_pipeline:219 - Exported files: ['data\\instruction\\ai-agent-datascience-instruct.train.jsonl', 'data\\instruction\\ai-agent-datascience-instruct.validation.jsonl', 'data\\instruction\\ai-agent-datascience-instruct.train.parquet', 'data\\instruction\\ai-agent-datascience-instruct.validation.parquet']
