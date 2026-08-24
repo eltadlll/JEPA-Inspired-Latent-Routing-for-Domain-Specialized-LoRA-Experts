@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI Agent Engineering & Data Science — Instruction Dataset Pipeline
 
 A production-grade, modular data engineering pipeline that builds a
@@ -230,3 +231,6 @@ does not bundle any collected content. Respect the license of every
 source you configure it to collect from (GitHub repo licenses, arXiv's
 terms, Hugging Face dataset cards, individual blog terms of use) before
 using or redistributing the resulting dataset.
+=======
+# JEPA-INSPIRED-LATENT-ROUTING-FOR-DOMAINSPECIALIZED-LoRA-EXPERTS
+>>>>>>> 51b92bf9757c7b539143f995c5566ae5969f6c8f
