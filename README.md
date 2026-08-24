@@ -332,13 +332,3 @@ whenever the router's confidence is low, since the base model already
 outperforms both fine-tuned variants on this evaluation set.
 
 ---
-
-## License
-
-The dataset pipeline (Part 1) is infrastructure code for building your
-own dataset; it does not bundle any collected content. Respect the
-license of every source you configure it to collect from (GitHub repo
-licenses, arXiv's terms, Hugging Face dataset cards, individual blog
-terms of use) before using or redistributing the resulting dataset. The
-research code and paper (Parts 2–3) are provided for reproducibility of
-the reported experiments.
